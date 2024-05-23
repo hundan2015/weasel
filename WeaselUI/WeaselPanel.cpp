@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "mylog.h"
 #include "WeaselPanel.h"
 
 #include <utility>
@@ -173,6 +174,13 @@ void WeaselPanel::_InitFontRes(bool forced) {
   // if style changed, or dpi changed, or pDWR NULL, re-initialize directwrite
   // resources
   if (forced || (pDWR == NULL) || (m_ostyle != m_style) || (dpiX != dpi)) {
+    if (dpiX != dpi) {
+      Log("dpi = ");
+      Log(dpi);
+      Log(", dpiX = ");
+      Log(dpiX);
+      Logn(", reset pDWR called");
+    }
     pDWR.reset();
     pDWR = std::make_shared<DirectWriteResources>(m_style, dpiX);
     pDWR->pRenderTarget->SetTextAntialiasMode(
