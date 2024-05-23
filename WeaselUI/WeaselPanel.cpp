@@ -74,7 +74,12 @@ WeaselPanel::WeaselPanel(weasel::UI& ui)
                        LR_DEFAULTCOLOR);
   // for gdi+ drawings, initialization
   GdiplusStartup(&_m_gdiplusToken, &_m_gdiplusStartupInput, NULL);
-
+  
+  HMONITOR hMonitor = MonitorFromRect(m_inputPos, MONITOR_DEFAULTTONEAREST);
+  UINT dpiX = 96, dpiY = 96;
+  if (hMonitor)
+    GetDpiForMonitor(hMonitor, MDT_EFFECTIVE_DPI, &dpiX, &dpiY);
+  dpi = dpiX;
   _InitFontRes();
   m_ostyle = m_style;
 }
@@ -167,7 +172,7 @@ void WeaselPanel::_InitFontRes(bool forced) {
   // prepare d2d1 resources
   // if style changed, or dpi changed, or pDWR NULL, re-initialize directwrite
   // resources
-  if (forced || (pDWR == NULL) || (m_ostyle != m_style)) {
+  if (forced || (pDWR == NULL) || (m_ostyle != m_style) || (dpiX != dpi)) {
     pDWR.reset();
     pDWR = std::make_shared<DirectWriteResources>(m_style, dpiX);
     pDWR->pRenderTarget->SetTextAntialiasMode(
