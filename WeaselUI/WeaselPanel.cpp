@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+#include "stdafx.h"
 #include "WeaselPanel.h"
 
 #include <utility>
@@ -74,7 +74,7 @@ WeaselPanel::WeaselPanel(weasel::UI& ui)
                        LR_DEFAULTCOLOR);
   // for gdi+ drawings, initialization
   GdiplusStartup(&_m_gdiplusToken, &_m_gdiplusStartupInput, NULL);
-  
+
   HMONITOR hMonitor = MonitorFromRect(m_inputPos, MONITOR_DEFAULTTONEAREST);
   UINT dpiX = 96, dpiY = 96;
   if (hMonitor)
